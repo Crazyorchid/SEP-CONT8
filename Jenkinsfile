@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Pull') {
             steps {
-                git branch: 'development', credentialsId: 'Crazyorchid', url: 'https://github.com/Crazyorchid/SEP-CONT8.git'
+                git credentialsId: '3a38c8cc-2a3c-4b8e-b904-c23325397b2c', url: 'https://git-server/group/a-project.git'
             }
         }
 
@@ -23,16 +23,23 @@ pipeline {
 
         stage('Build') {
             steps {
+                script {                
+                        sh '''npm run build'''
+                }
+            }
+        }
+
+        stage('Upload') {
+            steps {
                 script {
-                   sh 'npm run build'
+                    if (params.env == 'all' || params.env == 'online-test') {
+                        sshPublisher(publishers: [sshPublisherDesc(configName: 'ssh-config-name', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/app/a-application-test', remoteDirectorySDF: false, removePrefix: 'dist/prod', sourceFiles: 'dist/prod/**')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                    }
+                    if (params.env == 'all' || params.env == 'product') {
+                        sshPublisher(publishers: [sshPublisherDesc(configName: 'ssh-config-name', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/app/a-application', remoteDirectorySDF: false, removePrefix: 'dist/prod', sourceFiles: 'dist/prod/**')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
                     }
                 }
             }
         }
-        stage('deploy to S3'){
-          steps{
-              sh 'aws s3 cp public s3://cont8 --recursive'
-          }
-      }
     }
 }
