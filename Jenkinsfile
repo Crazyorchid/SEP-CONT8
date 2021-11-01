@@ -24,12 +24,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    if (params.env == 'all' || params.env == 'online-test') {
-                        sh '''npm run onlinetest'''
-                    }
-
-                    if (params.env == 'all' || params.env == 'online-test') {
-                        sh '''npm run package'''
+                   sh 'npm run build'
                     }
                 }
             }
