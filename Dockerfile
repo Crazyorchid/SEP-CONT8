@@ -5,7 +5,7 @@ FROM node:12-alpine
 ENV PORT=8080
 
 # Create and change to the app directory.
-WORKDIR /
+WORKDIR /usr/src/app
 
 RUN set -ex && \
     adduser node root && \
