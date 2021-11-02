@@ -11,8 +11,7 @@ pipeline {
         stage('Install') {
             steps {
                 sh '''
-                npm install --registry=https://registry.npm.taobao.org
-                npm install core-js@2.6.5 --save --registry=https://registry.npm.taobao.org
+                npm install
                 '''
             }
         }
