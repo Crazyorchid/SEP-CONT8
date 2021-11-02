@@ -1,5 +1,5 @@
 pipeline {
-    gent {
+    agent {
         docker {
             //using this docker image to run the following tasks
             image 'node:14.18.0'
