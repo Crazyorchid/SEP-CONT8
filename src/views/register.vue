@@ -2,7 +2,7 @@
   <div class="login clearfix">
     <div class="login-wrap">
       <el-row type="flex" justify="center">
-        <el-form class="login-container" label-position="left" label-width="0px" rules="registerRules">
+        <el-form class="login-container" label-position="left" label-width="0px">
           <h3>Sign Up
           </h3>
           <hr>
@@ -25,63 +25,18 @@
     </div>
   </div>
 </template>
-
+ 
 <script>
 import axios from "axios";
 export default {
   name: "Register",
   data() {
-    let reg = /(?!^(\d+|[a-zA-Z]+|[~!@#$%^&*?]+)$)^[\w~!@#$%^&*?]{6,12}$/
-    var validateNewPwd = (rule, value, callback) => {
-        if (!reg.test(value)) {
-            callback(new Error('the password must be between 6 and 12 characters or numbers'))
-        } else if (this.form.oldPasswd === value) {
-            callback(new Error('new password can not same with the old one！'))
-        } else {
-            callback()
-        }
-    }
-    var checkEmail = (rule, value, callback) => {
-    const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
-    if (!value) {
-      return callback(new Error('email address can not be empty'))
-    }
-    setTimeout(() => {
-      if (mailReg.test(value)) {
-        callback()
-      } else {
-        callback(new Error('please enter the right email address'))
-      }
-    }, 100)
-    }
     return {
       user: {
         username: "",
         email: "",
         password: ""
       },
-      rule:{
-        username:[
-          { required: true, message: 'please put in your user name', trigger: 'blur' },
-               { min: 2, max: 10, message: 'length between 2 and 10', trigger: 'blur' },
-               {
-                        required: true,
-                        pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9.·-]+$/,
-                        message: 'Name does not support special characters',
-                        trigger: 'blur'
-               }
-        ],
-        email: [
-                { required: true, message: 'please put in your email address' },
-                { validator: checkEmail, trigger: 'blur' }
-        ],
-        password: [
-                { required: true, message: 'please enter your new password', trigger: 'blur' },
-                { validator: validateNewPwd, trigger: 'blur' }
-            ],
-        
-      }
-
     };
   },
   created() {

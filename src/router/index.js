@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 //导入登录页面组件
 import Login from '@/views/login.vue'
-import Home from '@/views/Home.vue'
+import Home from '@/views/home.vue'
 import Register from "@/views/register";
 //import Book from "@/views/book.vue";
 

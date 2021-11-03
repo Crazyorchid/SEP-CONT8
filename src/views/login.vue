@@ -1,6 +1,6 @@
 <template>
   <body id="login-page">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-container" label-position="left" label-width="0px">
+    <el-form class="login-container" label-position="left" label-width="0px">
       <h3 class="login_title">Log in</h3>
       <el-form-item>
         <el-input
@@ -40,43 +40,14 @@ import { userLogin } from "@/api/user";
 export default {
   name: "Login",
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('please enter a valid username'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('please enter a valid password, not less than 6 characters'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
-        username: "",
-        password: ""
+        loginName: "",
+        password: "",
       },
-      rule: {
-        username: [
-          {required: true, message: 'please enter your username', trigger: 'blur' },
-          { validator: validateUsername, trigger: 'blur' }
-        ],
-        password: [
-          {required: true, message: 'please enter your password', trigger: 'blur' },
-          { validator: validatePassword, trigger: 'blur' }]
-      },
-      passwordType: 'password',
-      capsTooltip: false,
-      loading: false,
-      showDialog: false,
-      redirect: undefined,
-      otherQuery: {}
-    }
+      responseResult: [],
+    };
   },
-
   methods: {
     register() {
       this.$router.push({path: '/register'})
